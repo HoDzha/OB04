@@ -18,31 +18,62 @@
 # - Программа должна выводить результат боя в консоль.
 from abc import ABC, abstractmethod
 
-Class Fighter():
-    def __init__(self, health,power):
-        self.health = health
+# боец
+Class Fighter()
+    def __init__(self,name,power):
         self.power = power
-
-
-Class Monster():
-    def __init__(self, health, power):
+        self.name = name
+        self.weapon = None
+# монстр
+Class Monster()
+    def __init__(self, health):
         self.health = health
-        self.power = power
 
+# Абстраткный класс для оружия
 Class Weapon(ABC)
+
+    @abstractmethod
+    def __init__(self):
+        pass
     @abstractmethod
     def attack(self):
         pass
 
-Class Bow(Weapon):
-    def attack(self):
-        self.damage = 5
-        self.range = 10
+Class Bow(Weapon) #лук
+    def __init__(self, name, range, damage):
+        self.name = name
+        self.range = range
+        self.damage = damage
+    def attack(self,monster):
+        monster.health -= self.damage
+        if monster.health <= 0:
+            print(f"Победа! Монстр убит оружием {self.name} c расстоянием {self.range}!")
+        else:
+            print(f"Боец наносит удар! Монстр получил {self.damage} урона оружием {self.name} с расстояния {self.range} и осталось {monster.health} здоровья.")
 
-Class Sword(Weapon):
-    def attack(self):
-        self.damage = 10
-        self.range = 1
+Class Sword(Weapon) #меч
+    def __init__(self, name, damage):
+        self.name = name
+        self.damage = damage
+    def attack(self, monster):
+        monster.health -= self.damage
+        if monster.health <= 0:
+            print(f"Победа! Монстр убит оружием {self.name}!") ")
+        else:
+            print(f"Боец наносит удар! Монстр получил {self.damage} урона оружием {self.name} и осталось {monster.health} здоровья.")
 
 
+# игрок
+Class Player()
+    def __init__(self,fighter, weapon, monster):
+        self.fighter = fighter
+        self.fihter.weapon = weapon
+        self.monster = monster
+    def select_fighter(self,fighter):
+        self.fighter = fighter
+    def change_weapon(self, weapon):
+        self.fighter.weapon = weapon
+        print(f"Боец {fighter.name} выбрал оружие {weapon.name}!")
 
+    def fight(self):
+        self.fighter.weapon.attack(self.monster)
